@@ -4,7 +4,7 @@ This text aims at intuitively explaining and proving the main definitions and th
 
 The target audience is "undergraduates or strong high school students" but I might throw in some non-essential notes for the more advanced reader.
 
-If you have some background in category theory I would love to hear your thoughts on this document. The channel coding theorem could be viewed as stating the existence of coproducts in a category of discrete memory sources with sequences of encodings as morphisms and the entropy could be seen as a functor from this category to $(\mathbb{R}^+, \leq)$. This perspective should become clearer as you progress in this text.
+If you have some background in category theory I would love to hear your thoughts on this document. The channel coding theorem could be viewed as stating the existence of coproducts in a category of discrete memoryless sources with sequences of encodings as morphisms and the entropy could be seen as a functor from this category to $(\mathbb{R}^+, \leq)$. This perspective should become clearer as you progress in this text.
 
 ## Find the coin
 
