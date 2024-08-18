@@ -192,7 +192,7 @@ H_{e,d}(j) & =\lim_{n\to\infty}\frac{1}{n}H(e_{n}(X^{n}))\\
 then:
 $$\max_{e,d}H_{e,d}(j)=I(X,Y)$$
 
-# Channel coding proof (achievability)
+## Channel coding proof (achievability)
 
 Now we can encode $(X^n, Y^n)$ as $B_{Y^n}B_{X^n|Y^n}B'_{X^n|Y^n=y^n}$ with $H(B'_{X^n|Y^n=y^n})=o(n)$.
 
@@ -207,7 +207,7 @@ Since $H(B_{X^n|Y^n}B') = nH(X|Y)+|o(n)|$ we have $H(B_{Y^n|B_{Y^n|X^n}})\geq H(
 
 Hence $B_{Y^n|B_{Y^n|X^n}}$ is a function of $y^n$ that a.s.a. recovers $nI(X, Y)-|o(n)|$ bits from $X^n$.
 
-# Channel coding proof (otimality)
+## Channel coding proof (otimality)
 
 By contradiction, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations), let's assume there is a $d_n$ such that,
 $$I(d_n(Y^n), X^n)-nI(X,Y)=|\Omega(n)|$$
