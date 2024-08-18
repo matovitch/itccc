@@ -1,10 +1,10 @@
 # Information Theory: A Constructive Crash Course
 
-This text aims at intuitively explaining and proving the main definitions and theorems of Shannon's information theory with limited prerequisites; this includes: cross/conditional entropy, KL-divergence, mutual information, asymptotic codelength property (variant of AEP), source and channel coding theorems. It contains two new *constructive* proofs of resp. the coding theorem for discrete memoryless channel and achievability of capacity rate for the bit-flip channel.
+This text aims at intuitively explaining and proving the main definitions and theorems of Shannon's information theory with limited prerequisites; this includes: cross/conditional entropy, KL-divergence, mutual information, asymptotic codelength property (variant of AEP), source and channel coding theorems. It contains a new *constructive* proof of the coding theorem for discrete memoryless channel and an other non constructive proof of achievability of Shannon's capacity for the bit-flip channel.
 
 The target audience is "undergraduates or strong high school students" but I might throw in some non-essential notes for the more advanced reader.
 
-If you have some background in category theory I would love to hear your thoughts on this document. The channel coding theorem could be viewed as the existence of coproducts in a category of discrete memory sources with sequences of encodings as morphisms and the entropy could be seen as a functor from this category to $(\mathbb{R}^+, \leq)$. This perspective should become clearer as you progress in this text.
+If you have some background in category theory I would love to hear your thoughts on this document. The channel coding theorem could be viewed as stating the existence of coproducts in a category of discrete memory sources with sequences of encodings as morphisms and the entropy could be seen as a functor from this category to $(\mathbb{R}^+, \leq)$. This perspective should become clearer as you progress in this text.
 
 ## Find the coin
 
