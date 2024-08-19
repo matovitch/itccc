@@ -43,7 +43,7 @@ In the rest of the text we will drop the $2$ from $\log_{2}$ for simplicity.
 ## Conditional entropies
 
 Let $X$ and $Y$ be two discrete [random variables](https://en.wikipedia.org/wiki/Random_variable), we will write the [conditional probabilities](https://en.wikipedia.org/wiki/Conditional_probability) as,
-$$P(X,Y = x,y) = P(X = x)P(Y = y|X = x)$$
+$$P(X,Y = x, y) = P(X = x)P(Y = y|X = x)$$
 
 hence,
 $$\log P(X,Y = x,y) = \log P(X = x)+\log P(Y = y|X = x)$$
@@ -60,7 +60,7 @@ $$\mathbb{E}_{y}\left[\log P(Y = y|X = x)\right] = H(Y|X = x)$$
 With a similar reasonning, given $X_{1},\dots,X_{n}$ discrete random variables:
 $$H(X_{1}\dots X_{n})=\sum_{i=1}^{n}H\left(X_{i}|X_{j\lt i})\right)$$
 
-Note that $H(X)+H(Y)-H(XY)=D_{KL}(P(X,Y)\Vert P(X)\otimes P(Y))\geq 0$ where $\otimes$ denotes the [tensor product](https://en.wikipedia.org/wiki/Tensor_product).
+Note that $H(X)+H(Y)-H(XY)=D_{KL}(P(X,Y)\Vert P(X)\otimes P(Y))\geq 0$ where $\otimes$ denotes the [outer product](https://en.wikipedia.org/wiki/Outer_product).
 
 This is $0$ if and only if $X$ and $Y$ are [independent](https://en.wikipedia.org/wiki/Independence_(probability_theory)).
 
@@ -207,7 +207,7 @@ Since $H(B_{X^n|Y^n}B') = nH(X|Y)+|o(n)|$ we have $H(B_{Y^n|B_{Y^n|X^n}})\geq H(
 
 Hence $B_{Y^n|B_{Y^n|X^n}}$ is a function of $y^n$ that a.s.a. recovers $nI(X, Y)-|o(n)|$ bits from $X^n$.
 
-## Channel coding proof (otimality)
+## Channel coding proof (optimality)
 
 By contradiction, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations), let's assume there is a $d_n$ such that,
 $$I(d_n(Y^n), X^n)-nI(X,Y)=|\Omega(n)|$$
