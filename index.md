@@ -207,7 +207,7 @@ Since $H(B_{X^n|Y^n}B') = nH(X|Y)+|o(n)|$ we have $H(B_{Y^n|B_{Y^n|X^n}})\geq H(
 
 Hence $B_{Y^n|B_{Y^n|X^n}}$ is a function of $y^n$ that a.s.a. recovers $nI(X, Y)-|o(n)|$ bits from $X^n$.
 
-## Channel coding proof (otimality)
+## Channel coding proof (optimality)
 
 By contradiction, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations), let's assume there is a $d_n$ such that,
 $$I(d_n(Y^n), X^n)-nI(X,Y)=|\Omega(n)|$$
