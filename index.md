@@ -158,7 +158,7 @@ We can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k
 
 We repeat these two operations till the level $kH(Y|X) - |o(k)|$ of the binary tree is "full".
 
-We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|)H(X|Y)k=o(k)$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
+We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|)H(X|Y)k=|o(k)|$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
 
 This rebalancing procedure terminates since by contradition we would have $H(B_{Y^{k}|X^{k}=x^k}) \lt kH(Y|X) - |o(k)|$ but from the original encoding we have:
 $$H(B_{X^k}B_{Y^k|X^k=x^k})=H(X^kY^k)$$
@@ -173,7 +173,7 @@ Contradiction.
 
 ## Unification of prefix encodings using branch permutations
 
-After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of length $kH(Y|X) - o(k)$ as defining a family of surjections indexed by $x^k$ from the domain of $Y^k$ to binary strings of said length.
+After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of length $kH(Y|X) - |o(k)|$ as defining a family of surjections indexed by $x^k$ from the domain of $Y^k$ to binary strings of said length.
 
 We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
 
@@ -217,7 +217,6 @@ def encode_transmit_decode(payload : Bits[n(C-eps)]) -> Bits[n(C-eps)]:
     # 2. Transmit
     yn = noisy_channel(xn)
 
-
     # 3. Decode
     return prefix(n(C-eps), clever_encoding(yn))
 ```
@@ -227,13 +226,13 @@ We will show that $B_{Y^n|B_{Y^n|X^n}}$ is a valid `clever_encoding` such that t
 Let $\widetilde{y^n}$ be the sample used for the encoding and $x^n$, $y^n$ the value of `xn` and `yn` upon return, we need to show that a.s.a.
 $$\text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n})) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(y^n))$$
 
-and $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$ (enough for the APC to ensure we can a.s.a. get a prefix of $n(C-\epsilon)$ bits).
+and $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$ (enough for the APC to ensure we can a.s.a. get a prefix of $n(C-\epsilon)$ bits).
 
-The idea is to encode $(X^n,Y^n)$ as $B_{Y^n|B_{Y^n|X^n}}B_{Y^n|X^n}B_{X^n|Y^n}B'$ with $H(B')=o(n)$ as concatenation of the various suffixes.
+The idea is to encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
-We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since appending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n})=nH(X|Y)$ so $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$.
+We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since appending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n}B')=nH(X|Y)+|o(n)|$ so $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$.
 
-Furthermore since $\widetilde{y^n}$ and $y^n$ are sampled from $P(Y^n|X^n=x^n)$ the $n(C-\epsilon)$-prefixes must match a.s.a.
+Furthermore since $\widetilde{y^n}$ and $y^n$ are sampled from $P(Y^n|X^n=x^n)$ both $x^n$ encodings must a.s.a. match on a prefix of size $nC-|o(n)|$.
 
 ## Channel coding proof (optimality)
 
