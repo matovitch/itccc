@@ -1,10 +1,8 @@
 # Information Theory: A Constructive Crash Course
 
-This text aims at intuitively explaining and proving the main definitions and theorems of Shannon's information theory with limited prerequisites; this includes: cross/conditional entropy, KL-divergence, mutual information, asymptotic codelength property (variant of AEP), source and channel coding theorems. It contains a new *constructive* proof of the coding theorem for discrete memoryless channel and an other non constructive proof of achievability of Shannon's capacity for the bit-flip channel.
+This text aims at intuitively explaining and proving the main definitions and theorems of Shannon's information theory with limited prerequisites; this includes: cross/conditional entropy, KL-divergence, mutual information, asymptotic codelength property (variant of [AEP](https://en.wikipedia.org/wiki/Asymptotic_equipartition_property)), source and channel coding theorems. It contains a new *constructive* proof of the coding theorem for discrete memoryless channel and an other non constructive proof of achievability of Shannon's capacity for the bit-flip channel.
 
-The target audience is "undergraduates or strong high school students" but I might throw in some non-essential notes for the more advanced reader.
-
-If you have some background in category theory I would love to hear your thoughts on this document. The channel coding theorem could be viewed as stating the existence of coproducts in a category of discrete memoryless sources with sequences of encodings as morphisms and the entropy could be seen as a functor from this category to $(\mathbb{R}^+, \leq)$. This perspective should become clearer as you progress in this text.
+The target audience is "undergraduates/good high school students" but anyone is welcome here.
 
 ## Find the coin
 
@@ -35,7 +33,7 @@ $$-\sum_{i=1}^{n}p_{i}\log_{2}\left(q_{i}\right)$$
 This is the *cross-entropy* $H(p,q)$. As expected:
 $$H(p,q) \geq H(p)$$
 
-The difference is called *Kullback-Leibler divergence* and we note:
+The difference is called *Kullback-Leibler divergence* and is not symmetric, we note:
 $$D_{KL}(p\Vert q)=H(p,q)-H(p)$$
 
 In the rest of the text we will drop the $2$ from $\log_{2}$ for simplicity.
@@ -43,7 +41,7 @@ In the rest of the text we will drop the $2$ from $\log_{2}$ for simplicity.
 ## Conditional entropies
 
 Let $X$ and $Y$ be two discrete [random variables](https://en.wikipedia.org/wiki/Random_variable), we will write the [conditional probabilities](https://en.wikipedia.org/wiki/Conditional_probability) as,
-$$P(X,Y = x, y) = P(X = x)P(Y = y|X = x)$$
+$$P(X,Y = x,y) = P(X = x)P(Y = y|X = x)$$
 
 hence,
 $$\log P(X,Y = x,y) = \log P(X = x)+\log P(Y = y|X = x)$$
@@ -60,9 +58,22 @@ $$\mathbb{E}_{y}\left[\log P(Y = y|X = x)\right] = H(Y|X = x)$$
 With a similar reasonning, given $X_{1},\dots,X_{n}$ discrete random variables:
 $$H(X_{1}\dots X_{n})=\sum_{i=1}^{n}H\left(X_{i}|X_{j\lt i})\right)$$
 
-Note that $H(X)+H(Y)-H(XY)=D_{KL}(P(X,Y)\Vert P(X)\otimes P(Y))\geq 0$ where $\otimes$ denotes the [outer product](https://en.wikipedia.org/wiki/Outer_product).
+# Mutual information
 
-This is $0$ if and only if $X$ and $Y$ are [independent](https://en.wikipedia.org/wiki/Independence_(probability_theory)).
+Given two discrete random variables $X$ and $Y$ we have, $H(X)+H(Y)-H(XY)=D_{KL}(P(X,Y)\Vert P(X)\otimes P(Y))\geq 0$ where $\otimes$ denotes the [outer product](https://en.wikipedia.org/wiki/Outer_product).
+
+This quantity is called the *mutual information* $I(X, Y)$.
+
+It can be equivalently expressed as:
+$$
+\begin{align*}
+I(X, Y) & =H(XY) - H(X|Y) - H(Y|X)\\
+ & = H(X) - H(X|Y)\\
+ & = H(Y) - H(Y|X)
+\end{align*}
+$$
+
+This is left as an exercise but rest assured from that point on we will prove everything.
 
 ## Source coding theorem (lower bound)
 
@@ -89,9 +100,9 @@ $$nH(X)\leq\mathbb{E}\left[\overline{B_{X^n}}\right]\leq n\left(H(X)+\epsilon\ri
 
 From the conditional entropy formula we have $H(X^{n})=nH(X)$, so the left inequality is given by our previous result.
 
-For the right hand side, we will first show that given some naturals $l_{1}\leq\dots\leq l_{n}$ where $\sum2^{-l_{i}}\leq1$ we can build binary strings of lengths $l_{1},\dots,l_{n}$ such that no string is the prefix of another.
+For the right hand side, we first notice that given some naturals $l_{1}\leq\dots\leq l_{n}$ where $\sum2^{-l_{i}}\leq1$ we can build binary strings of lengths $l_{1},\dots,l_{n}$ such that no string is the prefix of another.
 
-Indeed, we notice that $1-\sum2^{-l_i}$ is a multiple of $2^{-l_n}$, such that adding $2^{l_{n}}-\sum2^{l_{n}-l_{i}}$ times $l_{n}$ to our set of lengths we get $\sum 2^{-l_i} = 1$. Then, if we prune an infinite binary tree at these lengths, the set of paths from the root to the leafs described using left/right instructions will form a valid *prefix-distinct* set of binary strings.
+Indeed, $1-\sum2^{-l_i}$ is a multiple of $2^{-l_n}$, such that adding $2^{l_{n}}-\sum2^{l_{n}-l_{i}}$ times $l_{n}$ to our set of lengths we get $\sum 2^{-l_i} = 1$. Then, if we prune an infinite binary tree at these lengths, the set of paths from the root to the leafs described using left/right instructions will form a valid *prefix-distinct* set of binary strings.
 
 Now if we pick the lengths as $\left\lceil -\log_{2}P(X^{n}=(x_{1},\dots,x_{n}))\right\rceil$ then:
 $$
@@ -109,8 +120,7 @@ And we obtain the right inequality for $n>1/\epsilon$.
 Given $n > 1$, some sequence of $n$ discrete random variables $X^n$ and some logical statement $S({X^n})$, we will say that $S(X^n)$ holds almost surely asymptotically (a.s.a.) if we have:
 $$\lim_{n\to\infty}P(S(X^n))=1$$
 
-Let $m > 1$, we can encode $X^{nm} =(X^n_{1},\dots,X^n_{m})$ as $B_{X^{nm}}=B_{X^n_1}\dots B_{X^n_m}$ since the encoding $B_{X^n}$ is *prefix-distinct*.
-
+Let $m > 1$, using previous notation, we can encode $X^{nm} =(X^n_{1},\dots,X^n_{m})$ as $B_{X^{nm}}=B_{X^n_1}\dots B_{X^n_m}$ since the encoding $B_{X^n}$ is *prefix-distinct*.
 
 With the [weak law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers#Weak_law) we get a.s.a.,
 $$\left|\frac{1}{m}\overline{B_{X^{nm}}} - \mathbb{E}\left[\overline{B_{X^n}}\right]\right|\leq 1$$
@@ -119,7 +129,7 @@ $$n\left(H(X)-\frac{1}{n}\right) \leq\frac{1}{m}\overline{B_{X^{nm}}} \leq n\lef
 and with $n=m$ and $k=n^2$, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations) we get a.s.a.:
 $$\overline{B_{X^{k}}} \in \left[kH(X)\pm o(k)\right]$$
 
-## Notations and remarks
+## ACP for conditional encodings
 
 Given a discrete random variable $Y$ and using the distribution $P(Y=y|X=x)$ in place of $P(X=x)$ we can speak of the conditional encoding $B_{Y|X=x}$.
 
@@ -137,14 +147,14 @@ $$\frac{1}{m}\sum_{i=1}^{m}\overline{B_{Y^n|X^n=x^n_i}(y^n_i)}\in\left[ nH(Y|X)\
 and with $n = m$ and $k = n^2$ it means we can encode $(x^k,y^k)$ as $B_{X^k}(x^k)B_{Y^k|X^k=x^k}(y^k)$ such that a.s.a $\overline{B_{X^{k}}(x^k)} \in \left[kH(X)\pm o(k)\right]$ and 
 $\overline{B_{Y^{k}|X^{k}=x^k}(y^k)} \in \left[kH(Y|X)\pm o(k)\right]$.
 
-## One last tricky section
+## Prefix tree rebalancing
 
 $B_{Y^{k}|X^{k}=x^k}$ is a *prefix distinct* encoding as concatenation of *prefix distinct* encodings.
 
 We can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k}|X^{k}=x^k}$ as follow:
 
 - if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it to length $kH(Y|X) - |o(k)|$
-- use the internal nodes with a single child to graft subtrees pruned from length $kH(Y|X) - |o(k)|$
+- use the internal nodes with a single child to graft branches pruned from length $kH(Y|X) - |o(k)|$
 
 We repeat these two operations till the level $kH(Y|X) - |o(k)|$ of the binary tree is "full".
 
@@ -161,19 +171,17 @@ $$H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$$
 
 Contradiction.
 
-After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}(y^k)$ of length $kH(Y|X) - 3k^{3/4}$ as defining a family of surjections indexed by $x^k$ from the domain of $y^k$ to binary strings of said length.
+## Unification of prefix encodings using branch permutations
 
-We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - 3k^{3/4}}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
+After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of length $kH(Y|X) - o(k)$ as defining a family of surjections indexed by $x^k$ from the domain of $Y^k$ to binary strings of said length.
+
+We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
 
 Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$ we have $H(B_{Y^k|X^k}) \geq kH(Y|X)-|o(k)|$.
 
+Similarly, the suffix $B'_{Y^k|X^k=x^k}$ has an entropy of $|o(k)|$. We are now ready to dive into the channel coding theorem.
 
-## Mutual information and channel capacity
-
-Given two discrete random variables $X$ and $Y$ we note,
-$$I(X,Y)=H(X)+H(Y)-H(XY)$$
-
-the *mutual information* between $X$ and $Y$.
+## Channel capacity
 
 A communication channel is modeled by a source of input messages $X$ transmitted and received as output messages $Y$ on the other end of the channel. The conditional distribution $P(Y|X)$ defines the reliability of the channel.
 
@@ -181,49 +189,68 @@ Given a fixed conditional distribution $P(Y|X)$, we can try to modify the distri
 
 ## Channel coding theorem
 
-Let $X^n$ and $Y^n$ be sequences of $n$ paired discrete random variables from a joint distribution $j$ and $(e_n)$ and $(d_n)$ sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$.
+Let $X^n$ and $Y^n$ be sequences of $n$ paired discrete random variables from a joint distribution and $(e_n)$ and $(d_n)$ sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$.
 
 Let's note,
 $$\begin{align*}
-H_{e,d}(j) & =\lim_{n\to\infty}\frac{1}{n}H(e_{n}(X^{n}))\\
+h_{e,d} & =\lim_{n\to\infty}\frac{1}{n}H(e_{n}(X^{n}))\\
 & =\lim_{n\to\infty}\frac{1}{n}H(d_{n}(Y^{n}))
 \end{align*}$$
 
 then:
-$$\max_{e,d}H_{e,d}(j)=I(X,Y)$$
+$$\max_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
-Now we can encode $(X^n, Y^n)$ as $B_{Y^n}B_{X^n|Y^n}B'_{X^n|Y^n=y^n}$ with $H(B'_{X^n|Y^n=y^n})=o(n)$.
+For the rest of the proof we will note $C=I(X, Y)$.
 
-Now we can also encode $B_{Y^n|X^n}B_{Y^n}$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B'_{Y^n|B_{Y^n|X^n}=B_{Y^n|X^n}(y^n)}$ with $H(B'_{Y^n|B_{Y^n|X^n}=B_{Y^n|X^n}(y^n)})=o(n)$.
+Given $\epsilon>0$, we will suppose we are able to sample $P(X,Y)$ and will encode/decode $n(C-\epsilon)$ bits as follow:
 
-Noting $B'=B'_{Y^n|B_{Y^n|X^n}=B_{Y^n|X^n}(y^n)}B'_{X^n|Y^n=y^n}$, and merging the two encodings we can encode $(X^n,Y^n)$ as:
-$$B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$$
+```
+def encode_transmit_decode(payload : Bits[n(C-eps)]) -> Bits[n(C-eps)]:
 
-such that $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ encodes $X^n$ since prefixing it with $B_{Y^n|X^n}$ encodes $(X^n,Y^n)$.
+    # 1. Encode
+    do
+        xn, yn = p_xy.sample(n)
+    while prefix(n(C-eps), clever_encoding(yn)) != payload
 
-Since $H(B_{X^n|Y^n}B') = nH(X|Y)+|o(n)|$ we have $H(B_{Y^n|B_{Y^n|X^n}})\geq H(X^n)-nH(X|Y)-|o(n)|$.
+    # 2. Transmit
+    yn = noisy_channel(xn)
 
-Hence $B_{Y^n|B_{Y^n|X^n}}$ is a function of $y^n$ that a.s.a. recovers $nI(X, Y)-|o(n)|$ bits from $X^n$.
+
+    # 3. Decode
+    return prefix(n(C-eps), clever_encoding(yn))
+```
+
+We will show that $B_{Y^n|B_{Y^n|X^n}}$ is a valid `clever_encoding` such that the `encode_transmit_decode` function is a.s.a. the identity function.
+
+Let $\widetilde{y^n}$ be the sample used for the encoding and $x^n$, $y^n$ the value of `xn` and `yn` upon return, we need to show that a.s.a.
+$$\text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n})) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(y^n))$$
+
+and $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$ (enough for the APC to ensure we can a.s.a. get a prefix of $n(C-\epsilon)$ bits).
+
+The idea is to encode $(X^n,Y^n)$ as $B_{Y^n|B_{Y^n|X^n}}B_{Y^n|X^n}B_{X^n|Y^n}B'$ with $H(B')=o(n)$ as concatenation of the various suffixes.
+
+We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since appending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n})=nH(X|Y)$ so $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$.
+
+Furthermore since $\widetilde{y^n}$ and $y^n$ are sampled from $P(Y^n|X^n=x^n)$ the $n(C-\epsilon)$-prefixes must match a.s.a.
 
 ## Channel coding proof (optimality)
 
 By contradiction, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations), let's assume there is a $d_n$ such that,
-$$I(d_n(Y^n), X^n)-nI(X,Y)=|\Omega(n)|$$
+$$I(d_n(Y^n), X^n)-nC=|\Omega(n)|$$
 
 Since $H(X^nY^n)=H(X^n)+H(B_{Y^n|X^n})+o(n)$, we would have,
-$$I(B_{d_n(Y^n)|B_{Y^n|X^n}}, X^n)-nI(X,Y)=|\Omega(n)|$$
+$$I(B_{d_n(Y^n)|B_{Y^n|X^n}}, X^n)-nC=|\Omega(n)|$$
 
 but since:
 $$
-\begin{align}H(Y^{n}) & \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}}B_{Y^n|X^n})\\H(Y^{n}) & \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}})+H(B_{Y^n|X^n})\\nI(X,Y)-o(n)& \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}})\end{align}
+\begin{align*}H(Y^{n}) & \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}}B_{Y^n|X^n})\\H(Y^{n}) & \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}})+H(B_{Y^n|X^n})\\nC+o(n)& \geq H(B_{d_n(Y^n)|B_{Y^n|X^n}})\end{align*}
 $$
 
 Contradiction.
 
-
-## Bonus: proof of achivability for the bit flip channel
+## Bonus 1: capacity of the bit flip channel
 
 Inputs and outputs of this channel take binary values and the conditional probabilities are,
 - $P(Y=0|X=1)=p$
@@ -244,7 +271,7 @@ And the bound is reached when $P(Y=0)=1/2$ that is when $P(X=0)=1/2$.
 
 From now on, we will note $h(p)=-p\log_{2}p-(1-p)\log_{2}(1-p)$.
 
-Since we now have the capacity of the bit flip channel, we can try to prove the achievability.
+## Bonus 2: proof of achivability for the bit flip channel
 
 The idea of the proof consists in taking a random set of binary strings of given length $n$ and to show that if this set contains less than $2^{n(C-\epsilon)}$ strings, for any $\epsilon>0$, we will be almost certain to recognize the strings after a transmission as $n$ goes to infinity.
 
