@@ -202,37 +202,19 @@ $$\max_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
-For the rest of the proof we will note $C=I(X, Y)$.
+For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$.
 
-Given $\epsilon>0$, we will suppose we are able to sample $P(X,Y)$ and will encode/decode $n(C-\epsilon)$ bits as follow:
+We start by building $e_n$. For each $x^n$, we go thought the channel to get a $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$.
 
-```
-def encode_transmit_decode(payload : Bits[n(C-eps)]) -> Bits[n(C-eps)]:
+For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
 
-    # 1. Encode
-    do
-        xn, yn = p_xy.sample(n)
-    while prefix(n(C-eps), clever_encoding(yn)) != payload
+We remark that we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
-    # 2. Transmit
-    yn = noisy_channel(xn)
+We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n}B')=nH(X|Y)+|o(n)|$ so $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$.
 
-    # 3. Decode
-    return prefix(n(C-eps), clever_encoding(yn))
-```
+This result together with the ACP ensures we can a.s.a. get a prefix of $n(C-\epsilon)$ bits and that $e_n$ and $d_n$ are properly defined.
 
-We will show that $B_{Y^n|B_{Y^n|X^n}}$ is a valid `clever_encoding` such that the `encode_transmit_decode` function is a.s.a. the identity function.
-
-Let $\widetilde{y^n}$ be the sample used for the encoding and $x^n$, $y^n$ the value of `xn` and `yn` upon return, we need to show that a.s.a.
-$$\text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n})) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(y^n))$$
-
-and $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$ (enough for the APC to ensure we can a.s.a. get a prefix of $n(C-\epsilon)$ bits).
-
-The idea is to encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
-
-We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since appending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n}B')=nH(X|Y)+|o(n)|$ so $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$.
-
-Furthermore since $\widetilde{y^n}$ and $y^n$ are sampled from $P(Y^n|X^n=x^n)$ both $x^n$ encodings must a.s.a. match on a prefix of size $nC-|o(n)|$.
+And the images of $\widetilde{y^n}$ and $y^n$ by the prefix $B_{Y^n|B_{Y^n|X^n}}$ of this encoding of $X^n$ must a.s.a. match on a prefix of size $n(C-\epsilon)$ since they are both sampled from $P(Y^n|X^n=x^n)$.
 
 ## Channel coding proof (optimality)
 
