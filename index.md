@@ -30,10 +30,10 @@ This is the *entropy* of the [distribution](https://en.wikipedia.org/wiki/Probab
 Now if we assume the wrong distribution $q$, the number of questions we ask on average is:
 $$-\sum_{i=1}^{n}p_{i}\log_{2}\left(q_{i}\right)$$
 
-This is the *cross-entropy* $H(p,q)$. As expected:
+This is the *cross-entropy* $H(p,q)$ and it is not symmetric. As expected:
 $$H(p,q) \geq H(p)$$
 
-The difference is called *Kullback-Leibler divergence* and is not symmetric, we note:
+The difference is called *Kullback-Leibler divergence*, we note:
 $$D_{KL}(p\Vert q)=H(p,q)-H(p)$$
 
 In the rest of the text we will drop the $2$ from $\log_{2}$ for simplicity.
