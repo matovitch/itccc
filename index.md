@@ -163,7 +163,7 @@ We can bound the increase in expected length from the padding step by $P(\overli
 This rebalancing procedure terminates since by contradition we would have $H(B_{Y^{k}|X^{k}=x^k}) \lt kH(Y|X) - |o(k)|$ but from the original encoding we have:
 $$H(B_{X^k}B_{Y^k|X^k=x^k})=H(X^kY^k)$$
 
-using conditional probabilities and our inequality from the KL-divergence of tensor product we get,
+using conditional probabilities and the positivity of mutual information we get,
 $$H(B_{X^k})+H(B_{Y^k|X^k=x^k})\geq H(X^k)+H(Y^k|X^k)$$
 
 with $H(B_{X^k})=H(X^k)$ we have,
