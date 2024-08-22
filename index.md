@@ -210,13 +210,18 @@ Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|
 
 We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
-And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$.
+And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$.
 
 Furthermore, since $H(B_{X^n|Y^n})=nH(X|Y)-|o(n)|$ and $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$ we have,
-$$H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)=|o(n)|$$
+$$
+\begin{align*}
+H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H(X^n) \\
+&\leq H(B_{Y^n|B_{Y^n|X^n}}) + H(B_{X^n|Y^n}) - H(X^n)\\
+&\leq|o(n)|
+\end{align*}$$
 
 since $B_{X^n|Y^n}$ is a function of $x^n$ and $H(B')=|o(n)|$ we get,
-$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)=|o(n)|$$
+$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)\leq|o(n)|$$
 
 hence $B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}$) and $B_{Y^n|B_{Y^n|X^n}}(y^n)$ a.s.a. share a prefix of $n(C-\epsilon)$ bits.
 
