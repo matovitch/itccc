@@ -151,16 +151,20 @@ $\overline{B_{Y^{k}|X^{k}=x^k}(y^k)} \in \left[kH(Y|X)\pm o(k)\right]$.
 
 $B_{Y^{k}|X^{k}=x^k}$ is a *prefix distinct* encoding as concatenation of *prefix distinct* encodings.
 
-We can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k}|X^{k}=x^k}$ as follow:
+Given $\epsilon > 0$, we can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k}|X^{k}=x^k}$ as follow:
 
-1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it with ones to length $kH(Y|X) - |o(k)|$
-1. use the new internal nodes with a single child to graft branches pruned from length $kH(Y|X) - |o(k)|$
+1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<k(H(Y|X) - \epsilon)$ pad it with ones to length $k(H(Y|X) - \epsilon)$
+1. use the new internal nodes with a single child to graft branches pruned from length $k(H(Y|X) - \epsilon)$
 
-We repeat these two operations till the level $kH(Y|X) - |o(k)|$ of the binary tree is "full".
+We repeat these two operations till the level $k(H(Y|X) - \epsilon)$ of the binary tree is "full".
 
-We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|)H(X|Y)k=|o(k)|$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
+We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<k(H(Y|X) - \epsilon))H(X|Y)k=|o(k)|$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
 
-This rebalancing procedure terminates since by contradition we would have $H(B_{Y^{k}|X^{k}=x^k}) \lt kH(Y|X) - |o(k)|$ but from the original encoding we have:
+This rebalancing procedure terminates since $H(B_{Y^{k}|X^{k}=x^k}) = H(Y^k|X^k=x^k) = kH(Y|X) + o(k)$.
+
+Since this is valid for any $\epsilon > 0$ we can pick a suitable $o(k)$ such that $\epsilon = |o(k)|/k$.
+
+<!--the original encoding we have:
 $$H(B_{X^k}B_{Y^k|X^k=x^k})=H(X^kY^k)$$
 
 using conditional probabilities and the positivity of mutual information we get,
@@ -169,7 +173,7 @@ $$H(B_{X^k})+H(B_{Y^k|X^k=x^k})\geq H(X^k)+H(Y^k|X^k)$$
 with $H(B_{X^k})=H(X^k)$ we have,
 $$H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$$
 
-Contradiction.
+Contradiction.-->
 
 ## Unification of prefix encodings using branch permutations
 
@@ -177,7 +181,7 @@ After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of lengt
 
 We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
 
-Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
+Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})=kH(Y|X)+o(k)$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
 
 Similarly, the suffix $B'_{Y^k|X^k=x^k}$ has an entropy of $|o(k)|$. We are now ready to dive into the channel coding theorem.
 
