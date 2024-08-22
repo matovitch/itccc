@@ -206,24 +206,26 @@ For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 
 
 For each $x^n$, we first go throught the channel sampling $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$. For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
 
-Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that the $n(C-\epsilon)-$prefixes are a.s.a. defined.
+Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that a.s.a. the $n(C-\epsilon)-$prefixes are defined.
 
 We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
-And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$.
-
-Furthermore, since $H(B_{X^n|Y^n})=nH(X|Y)-|o(n)|$ and $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$ we have,
+And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ so,
 $$
 \begin{align*}
 H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H(X^n) \\
 &\leq H(B_{Y^n|B_{Y^n|X^n}}) + H(B_{X^n|Y^n}) +H(B') - H(X^n)\\
-&\leq|o(n)|
+&\leq nC - |o(n)| + nH(X|Y)-|o(n)| + |o(n)| - nH(X)\\
+\mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)]&\leq|o(n)|
 \end{align*}$$
 
-since $B_{X^n|Y^n}$ is a function of $x^n$ and $H(B')=|o(n)|$ we get,
-$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)\leq|o(n)|$$
+discarding the suffix $B_{X^n|Y^n}B'$ only decrease the entropy hence,
+$$\mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)]\leq|o(n)|$$
 
-hence $B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}$) and $B_{Y^n|B_{Y^n|X^n}}(y^n)$ a.s.a. share a prefix of $n(C-\epsilon)$ bits.
+that is a.s.a. we have,
+$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n) \leq n\epsilon/2$$
+
+and since $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$ then  $B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}$) and $B_{Y^n|B_{Y^n|X^n}}(y^n)$ a.s.a. share a prefix of $n(C-\epsilon)$ bits.
 
 <!--
 We remark that we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
