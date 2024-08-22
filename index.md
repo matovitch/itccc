@@ -216,7 +216,7 @@ Furthermore, since $H(B_{X^n|Y^n})=nH(X|Y)-|o(n)|$ and $H(B_{Y^n|B_{Y^n|X^n}})=n
 $$
 \begin{align*}
 H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H(X^n) \\
-&\leq H(B_{Y^n|B_{Y^n|X^n}}) + H(B_{X^n|Y^n}) - H(X^n)\\
+&\leq H(B_{Y^n|B_{Y^n|X^n}}) + H(B_{X^n|Y^n}) +H(B') - H(X^n)\\
 &\leq|o(n)|
 \end{align*}$$
 
