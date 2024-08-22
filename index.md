@@ -177,7 +177,7 @@ After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of lengt
 
 We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
 
-Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$ we have $H(B_{Y^k|X^k}) \geq kH(Y|X)-|o(k)|$.
+Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
 
 Similarly, the suffix $B'_{Y^k|X^k=x^k}$ has an entropy of $|o(k)|$. We are now ready to dive into the channel coding theorem.
 
@@ -202,12 +202,25 @@ $$\max_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
-For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$.
+For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$. We start by building $e_n$ and $d_n$.
 
-We start by building $e_n$. For each $x^n$, we go thought the channel to get a $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$.
+For each $x^n$, we first go throught the channel sampling $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$. For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
 
-For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
+Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that the $n(C-\epsilon)-$prefixes are a.s.a. defined.
 
+We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
+
+And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$.
+
+Furthermore, since $H(B_{X^n|Y^n})=nH(X|Y)-|o(n)|$ and $H(B_{Y^n|B_{Y^n|X^n}})=nC-|o(n)|$ we have,
+$$H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)=|o(n)|$$
+
+since $B_{X^n|Y^n}$ is a function of $x^n$ and $H(B')=|o(n)|$ we get,
+$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)=|o(n)|$$
+
+hence $B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}$) and $B_{Y^n|B_{Y^n|X^n}}(y^n)$ a.s.a. share a prefix of $n(C-\epsilon)$ bits.
+
+<!--
 We remark that we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
 We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ and $H(B_{X^n|Y^n}B')=nH(X|Y)+|o(n)|$ so $H(B_{Y^n|B_{Y^n|X^n}})\geq nC-|o(n)|$.
@@ -215,7 +228,7 @@ We can recover $X^n$ from $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending $B
 This result together with the ACP ensures we can a.s.a. get a prefix of $n(C-\epsilon)$ bits and that $e_n$ and $d_n$ are properly defined.
 
 And the images of $\widetilde{y^n}$ and $y^n$ by the prefix $B_{Y^n|B_{Y^n|X^n}}$ of this encoding of $X^n$ must a.s.a. match on a prefix of size $n(C-\epsilon)$ since they are both sampled from $P(Y^n|X^n=x^n)$.
-
+-->
 ## Channel coding proof (optimality)
 
 By contradiction, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations), let's assume there is a $d_n$ such that,
