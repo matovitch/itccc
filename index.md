@@ -153,8 +153,8 @@ $B_{Y^{k}|X^{k}=x^k}$ is a *prefix distinct* encoding as concatenation of *prefi
 
 We can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k}|X^{k}=x^k}$ as follow:
 
-- if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it to length $kH(Y|X) - |o(k)|$
-- use the internal nodes with a single child to graft branches pruned from length $kH(Y|X) - |o(k)|$
+1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it to length $kH(Y|X) - |o(k)|$
+1. use the new internal nodes with a single child to graft branches pruned from length $kH(Y|X) - |o(k)|$
 
 We repeat these two operations till the level $kH(Y|X) - |o(k)|$ of the binary tree is "full".
 
@@ -189,9 +189,9 @@ Given a fixed conditional distribution $P(Y|X)$, we can try to modify the distri
 
 ## Channel coding theorem
 
-Let $X^n$ and $Y^n$ be sequences of $n$ paired discrete random variables from a joint distribution and $(e_n)$ and $(d_n)$ sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$.
+Given $n$ pairs of discrete random variables sampled from a joint probability distribution, we note $X^n$ and $Y^n$ the deinterlaced sequences.
 
-Let's note,
+Let $(e_n)$ and $(d_n)$ be sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$. If we note,
 $$\begin{align*}
 h_{e,d} & =\lim_{n\to\infty}\frac{1}{n}H(e_{n}(X^{n}))\\
 & =\lim_{n\to\infty}\frac{1}{n}H(d_{n}(Y^{n}))
@@ -202,11 +202,11 @@ $$\max_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
-For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$. We start by building $e_n$ and $d_n$.
+For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$. We start by building the "(en/de)coders" $e_n$ and $d_n$.
 
 For each $x^n$, we first go throught the channel sampling $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$. For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
 
-Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that a.s.a. the $n(C-\epsilon)-$prefixes are defined.
+Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that a.s.a. the $n(C-\epsilon)$ bits prefixes are defined.
 
 We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
@@ -219,7 +219,7 @@ H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H
 \mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)]&\leq|o(n)|
 \end{align*}$$
 
-discarding the suffix $B_{X^n|Y^n}B'$ only decrease the entropy hence,
+discarding the suffix $B_{X^n|Y^n}B'$ only decreases the entropy hence,
 $$\mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)]\leq|o(n)|$$
 
 that is a.s.a. we have,
