@@ -153,7 +153,7 @@ $B_{Y^{k}|X^{k}=x^k}$ is a *prefix distinct* encoding as concatenation of *prefi
 
 We can then perform a rebalacing of the *prefix distinct* tree defining $B_{Y^{k}|X^{k}=x^k}$ as follow:
 
-1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it to length $kH(Y|X) - |o(k)|$
+1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<kH(Y|X) - |o(k)|$ pad it with ones to length $kH(Y|X) - |o(k)|$
 1. use the new internal nodes with a single child to graft branches pruned from length $kH(Y|X) - |o(k)|$
 
 We repeat these two operations till the level $kH(Y|X) - |o(k)|$ of the binary tree is "full".
@@ -193,12 +193,12 @@ Given $n$ pairs of discrete random variables sampled from a joint probability di
 
 Let $(e_n)$ and $(d_n)$ be sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$. If we note,
 $$\begin{align*}
-h_{e,d} & =\lim_{n\to\infty}\frac{1}{n}H(e_{n}(X^{n}))\\
-& =\lim_{n\to\infty}\frac{1}{n}H(d_{n}(Y^{n}))
+h_{e,d} & =\sup_{n}\frac{1}{n}H(e_{n}(X^{n}))\\
+& =\sup_{n}\frac{1}{n}H(d_{n}(Y^{n}))
 \end{align*}$$
 
 then:
-$$\max_{e,d}h_{e,d}=I(X,Y)$$
+$$\sup_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
@@ -210,7 +210,7 @@ Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|
 
 We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
 
-And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $(X^n,Y^n)$ so,
+And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $Y^n$, so we have,
 $$
 \begin{align*}
 H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H(X^n) \\
