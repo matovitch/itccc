@@ -160,7 +160,7 @@ We repeat these two operations till the level $k(H(Y|X) - \epsilon)$ of the bina
 
 We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<k(H(Y|X) - \epsilon))H(X|Y)k=|o(k)|$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
 
-This rebalancing procedure terminates since $H(B_{Y^{k}|X^{k}=x^k}) = H(Y^k|X^k=x^k) = kH(Y|X) + o(k)$.
+For large enough $k$, the rebalancing procedure terminates since $H(B_{Y^{k}|X^{k}=x^k}) = H(Y^k|X^k=x^k) = kH(Y|X) + o(k)$.
 
 Since this is valid for any $\epsilon > 0$ we can pick a suitable $o(k)$ such that $\epsilon = |o(k)|/k$.
 
