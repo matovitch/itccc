@@ -179,7 +179,7 @@ Contradiction.-->
 
 After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of length $kH(Y|X) - |o(k)|$ as defining a family of surjections indexed by $x^k$ from the domain of $Y^k$ to binary strings of said length.
 
-We can then consider the right inverses $g_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ g_{x^k}=B_{Y^k|X^k}$.
+We can then consider the right inverses $f_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ f_{x^k}=B_{Y^k|X^k}$.
 
 Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})=kH(Y|X)+o(k)$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
 
@@ -195,7 +195,7 @@ Given a fixed conditional distribution $P(Y|X)$, we can try to modify the distri
 
 Given $n$ pairs of discrete random variables sampled from a joint probability distribution, we note $X^n$ and $Y^n$ the deinterlaced sequences.
 
-Let $(e_n)$ and $(d_n)$ be sequences of functions such that a.s.a. $e_n(X^n)=d_n(Y^n)$. If we note,
+Let $(e_n)$ and $(d_n)$ be sequences of functions such that $H(e_n(X^n)|d_n(Y^n))=|o(n)|$ and $H(d_n(Y^n)|e_n(X^n))=|o(n)|$. If we note,
 $$\begin{align*}
 h_{e,d} & =\sup_{n}\frac{1}{n}H(e_{n}(X^{n}))\\
 & =\sup_{n}\frac{1}{n}H(d_{n}(Y^{n}))
@@ -206,30 +206,35 @@ $$\sup_{e,d}h_{e,d}=I(X,Y)$$
 
 ## Channel coding proof (achievability)
 
-For the rest of the proof we will note $C=I(X, Y)$. Let $\epsilon > 0$ and $n > 1$. We start by building the "(en/de)coders" $e_n$ and $d_n$.
+For the rest of the proof we will note $C=I(X,Y)$ and $n>1$.
 
-For each $x^n$, we first go throught the channel sampling $\widetilde{y^n}$ and define $e_n(x^n) = \text{prefix}_{n(C-\epsilon)}(B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}))$. For $d_n$, we will simply use $\text{prefix}_{n(C-\epsilon)} \circ B_{Y^n|B_{Y^n|X^n}}$.
+We first remark we can encode $(X^n, Y^n)$ in two ways:
 
-Note from previous results we have $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$, such that a.s.a. the $n(C-\epsilon)$ bits prefixes are defined.
+- $B_{X^n|Y^n}B_{X^n|B_{X^n|Y^n}}B_{Y^n|X^n}B'_{X}$
+- $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'_{Y}$
 
-We then remark we can encode $(X^n,Y^n)$ as $B_{Y^n|X^n}B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ with $H(B')=|o(n)|$ as concatenation of the various suffixes.
+with $H(B'_{X})=|o(n)|$ and $H(B'_{Y})=|o(n)|$ as concatenations of various suffixes.
 
-And we can recover $X^n$ from the suffix $B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'$ since prepending it with $B_{Y^n|X^n}$ recovers $Y^n$, so we have,
-$$
-\begin{align*}
-H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n)&=H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B') - H(X^n) \\
-&\leq H(B_{Y^n|B_{Y^n|X^n}}) + H(B_{X^n|Y^n}) +H(B') - H(X^n)\\
-&\leq nC - |o(n)| + nH(X|Y)-|o(n)| + |o(n)| - nH(X)\\
-\mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}B_{X^n|Y^n}B'|X^n=x^n)]&\leq|o(n)|
+Droping $B_{X^n|Y^n}$ and $B_{Y^n|X^n}$ we notice,
+
+$$\begin{align*}
+H(B_{Y^n|B_{Y^n|X^n}}B'_{Y}|B_{X^n|B_{X^n|Y^n}}B'_{X})&\geq H(B_{Y^n|B_{Y^n|X^n}}B'_{Y}|B_{X^n|B_{X^n|Y^n}})-H(B'_{X})\\
+0&\geq H(B_{Y^n|B_{Y^n|X^n}}B'_{Y}|B_{X^n|B_{X^n|Y^n}}) - |o(n)|
 \end{align*}$$
 
-discarding the suffix $B_{X^n|Y^n}B'$ only decreases the entropy hence,
-$$\mathbb{E_{x^n}}[H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n)]\leq|o(n)|$$
+that is $H(B_{Y^n|B_{Y^n|X^n}}B'_{Y}|B_{X^n|B_{X^n|Y^n}})=|o(n)|$ and droping $B'_{Y}$ we have,
 
-that is a.s.a. we have,
-$$H(B_{Y^n|B_{Y^n|X^n}}|X^n=x^n) \leq n\epsilon/2$$
+$$
+H(B_{Y^n|B_{Y^n|X^n}}|B_{X^n|B_{X^n|Y^n}})=|o(n)|
+$$
 
-and since $\overline{B_{Y^n|B_{Y^n|X^n}}} = nC - |o(n)|$ then  $B_{Y^n|B_{Y^n|X^n}}(\widetilde{y^n}$) and $B_{Y^n|B_{Y^n|X^n}}(y^n)$ a.s.a. share a prefix of $n(C-\epsilon)$ bits.
+and similarly:
+
+$$
+H(B_{X^n|B_{X^n|Y^n}}|B_{Y^n|B_{Y^n|X^n}})=|o(n)|
+$$
+
+Furthermore we have $H(B_{Y^n|B_{Y^n|X^n}}) = nC - |o(n)|$ and $H(B_{X^n|B_{X^n|Y^n}}) = nC - |o(n)|$.
 
 ## Channel coding proof (optimality)
 
