@@ -58,7 +58,7 @@ $$\mathbb{E}_{y}\left[\log P(Y = y|X = x)\right] = H(Y|X = x)$$
 With a similar reasonning, given $X_{1},\dots,X_{n}$ discrete random variables:
 $$H(X_{1}\dots X_{n})=\sum_{i=1}^{n}H\left(X_{i}|X_{j\lt i})\right)$$
 
-# Mutual information
+## Mutual information
 
 Given two discrete random variables $X$ and $Y$ we have, $H(X)+H(Y)-H(XY)=D_{KL}(P(X,Y)\Vert P(X)\otimes P(Y))\geq 0$ where $\otimes$ denotes the [outer product](https://en.wikipedia.org/wiki/Outer_product).
 
@@ -129,23 +129,9 @@ $$n\left(H(X)-\frac{1}{n}\right) \leq\frac{1}{m}\overline{B_{X^{nm}}} \leq n\lef
 and with $n=m$ and $k=n^2$, using [Landau's notation](https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations) we get a.s.a.:
 $$\overline{B_{X^{k}}} \in \left[kH(X)\pm o(k)\right]$$
 
-## ACP for conditional encodings
+Given a sequence of $k$ discrete random variables $Y^k$ sampled from a conditional distribution $P(Y=y|X=x)$ we can similarly consider of the conditional encoding $B_{Y^k|X^k=x^k}$.
 
-Given a discrete random variable $Y$ and using the distribution $P(Y=y|X=x)$ in place of $P(X=x)$ we can speak of the conditional encoding $B_{Y|X=x}$.
-
-If we similarly derive the ACP for conditional encodings, we get the existence of an encoding $B_{Y^n|X^n=x^n}$ such that a.s.a. $\overline{B_{Y^n|X^n=x^n}} \in \left[H(Y^n|X^n=x^n)\pm o(n)\right]$.
-
-
-Given $m > 1$, we can encode a sequence $(x^n_1,y^n_1,\dots,x^n_m,y^n_m)$ as $B_{X^{nm}}B_{Y^n|X^n=x^n_1}(y^n_1)\dots B_{Y^n|X^n=x^n_m}(y^n_m)$ triming the prefix $B_{X^{nm}}$ we have,
-
-$$\overline{B_{Y^n|X^n=x^n_1}(y^n_1)\dots B_{Y^n|X^n=x^n_m}(y^n_m)}=\sum_{i=1}^{m}\overline{B_{Y^n|X^n=x^n_i}(y^n_i)}$$
-
-using the weak law of large numbers as before we get a.s.a.
-$$\frac{1}{m}\sum_{i=1}^{m}\overline{B_{Y^n|X^n=x^n_i}(y^n_i)}\in\left[ nH(Y|X)\pm o(n) \right]$$
-
-
-and with $n = m$ and $k = n^2$ it means we can encode $(x^k,y^k)$ as $B_{X^k}(x^k)B_{Y^k|X^k=x^k}(y^k)$ such that a.s.a $\overline{B_{X^{k}}(x^k)} \in \left[kH(X)\pm o(k)\right]$ and 
-$\overline{B_{Y^{k}|X^{k}=x^k}(y^k)} \in \left[kH(Y|X)\pm o(k)\right]$.
+With the weak law of large number we have a.s.a. $H(Y^k|X^k=x^k)\in [kH(Y|X)\pm o(k)]$. Pairing this result with the above construction we get a.s.a. $\overline{B_{Y^k|X^k=x^k}} \in \left[kH(Y|X)\pm o(k)\right]$.
 
 ## Prefix tree rebalancing
 
@@ -156,24 +142,13 @@ Given $\epsilon > 0$, we can then perform a rebalacing of the *prefix distinct* 
 1. if $\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<k(H(Y|X) - \epsilon)$ pad it with ones to length $k(H(Y|X) - \epsilon)$
 1. use the new internal nodes with a single child to graft branches pruned from length $k(H(Y|X) - \epsilon)$
 
-We repeat these two operations till the level $k(H(Y|X) - \epsilon)$ of the binary tree is "full".
+We repeat these two operations till the level $k(H(Y|X) - \epsilon)$ of the binary tree is "full" or there is no branch left to prune.
 
 We can bound the increase in expected length from the padding step by $P(\overline{B_{Y^{k}|X^{k}=x^k}(y^n)}<k(H(Y|X) - \epsilon))H(X|Y)k=|o(k)|$, and the grafting step followed by the second padding step only decrease the expected length (inductively for following iterations).
 
-For large enough $k$, the rebalancing procedure terminates since $H(B_{Y^{k}|X^{k}=x^k}) = H(Y^k|X^k=x^k) = kH(Y|X) + o(k)$.
+For large enough $k$, the rebalancing procedure terminates with a full $k(H(Y|X) - \epsilon)$ level since a.s.a. $H(B_{Y^{k}|X^{k}=x^k}) = H(Y^k|X^k=x^k) \in [kH(Y|X) \pm o(k)]$. Let's pick such $k$.
 
 Since this is valid for any $\epsilon > 0$ we can pick a suitable $o(k)$ such that $\epsilon = |o(k)|/k$.
-
-<!--the original encoding we have:
-$$H(B_{X^k}B_{Y^k|X^k=x^k})=H(X^kY^k)$$
-
-using conditional probabilities and the positivity of mutual information we get,
-$$H(B_{X^k})+H(B_{Y^k|X^k=x^k})\geq H(X^k)+H(Y^k|X^k)$$
-
-with $H(B_{X^k})=H(X^k)$ we have,
-$$H(B_{Y^k|X^k=x^k})\geq kH(Y|X)$$
-
-Contradiction.-->
 
 ## Unification of prefix encodings using branch permutations
 
@@ -181,7 +156,7 @@ After the rebalancing we can view the prefix from $B_{Y^{k}|X^{k}=x^k}$ of lengt
 
 We can then consider the right inverses $f_{x^k}$ (note we don't need the axiom of choice since all sets are finite) such that $\text{prefix}_{kH(Y|X) - o(k)}(B_{Y^{k}|X^{k}=x^k})\circ f_{x^k}=B_{Y^k|X^k}$.
 
-Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation of $X^k$. Using $H(B_{Y^k|X^k=x^k})=kH(Y|X)+o(k)$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
+Note that $B_{Y^k|X^k}$ is a function of $y^k$ that does not depend upon the realisation $x^k$ of $X^k$. Using $H(B_{Y^k|X^k=x^k})\in [kH(Y|X)\pm o(k)]$ we have $H(B_{Y^k|X^k}) = kH(Y|X)-|o(k)|$.
 
 Similarly, the suffix $B'_{Y^k|X^k=x^k}$ has an entropy of $|o(k)|$. We are now ready to dive into the channel coding theorem.
 
